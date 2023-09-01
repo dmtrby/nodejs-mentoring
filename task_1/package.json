@@ -1,0 +1,22 @@
+{
+  "name": "node-js-task1",
+  "version": "1.0.0",
+  "description": "task1",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmtrby/nodejs-mentoring.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dmtrby/nodejs-mentoring/issues"
+  },
+  "homepage": "https://github.com/dmtrby/nodejs-mentoring#readme",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
