@@ -1,0 +1,19 @@
+{
+  "name": "task3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "task1": "nodemon src/check/eventEmitterTest.js",
+    "task2": "nodemon src/check/withTimeTest.js",
+    "task3": "nodemon src/task3/csvToJson.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "csvtojson": "^2.0.10"
+  }
+}
