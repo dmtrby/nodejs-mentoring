@@ -1,0 +1,11 @@
+{
+  "preset": "ts-jest",
+  "testEnvironment": "node",
+  "roots": ["./src"],
+  "collectCoverageFrom": ["./src/**"],
+  "coverageThreshold": {
+    "global": {
+      "lines": 90
+    }
+  }
+}
