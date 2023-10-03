@@ -1,29 +1,28 @@
 import { router } from "./routes/routes";
 import {
-  createUserController,
-  getUserController,
-  getUsersController,
-  getUserHobbiesController,
-  deleteUserController,
-  updateUserHobbyController,
-  updateUserController,
+  userHobbyController,
   mainController,
+  userController,
 } from "./controllers";
 import { PORT, REST_VALUES } from "./constants";
 
 const app = router();
 
 app.addRoute(REST_VALUES.get, "/", mainController);
-app.addRoute(REST_VALUES.get, "/users", getUsersController);
-app.addRoute(REST_VALUES.post, "/users", createUserController);
-app.addRoute(REST_VALUES.get, "/users/:id", getUserController);
-app.addRoute(REST_VALUES.patch, "/users/:id", updateUserController);
-app.addRoute(REST_VALUES.delete, "/users/:id", deleteUserController);
-app.addRoute(REST_VALUES.get, "/users/:id/hobbies", getUserHobbiesController);
+app.addRoute(REST_VALUES.get, "/users", userController.getAllUsers);
+app.addRoute(REST_VALUES.post, "/users", userController.createOneUser);
+app.addRoute(REST_VALUES.get, "/users/:id", userController.getOneUser);
+app.addRoute(REST_VALUES.patch, "/users/:id", userController.updateOneUser);
+app.addRoute(REST_VALUES.delete, "/users/:id", userController.deleteOneUser);
+app.addRoute(
+  REST_VALUES.get,
+  "/users/:id/hobbies",
+  userHobbyController.getUserHobbies
+);
 app.addRoute(
   REST_VALUES.patch,
   "/users/:id/hobbies",
-  updateUserHobbyController
+  userHobbyController.updateUserHobbies
 );
 
 app.listen(PORT, () => {

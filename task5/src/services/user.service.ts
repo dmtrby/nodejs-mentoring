@@ -37,7 +37,7 @@ export const addOrRemoveHobby = (id: number, newHobby: string) => {
 
 export const updateUser = (id: number, newUserData: User) => {
   let wasChanged = false;
-  userStorage.forEach((user, index) => {
+  userStorage.find((user, index) => {
     if (user.id === id) {
       userStorage[index] = { ...user, ...newUserData };
       wasChanged = true;
