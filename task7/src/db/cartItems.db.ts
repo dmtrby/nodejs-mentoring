@@ -10,14 +10,14 @@ const getCartItems = async (
 ): Promise<CartItem[]> => {
   const wrappedCart = wrap(cart).toReference();
   const wrappedProduct = wrap(product).toReference();
-  const cartsCollection = await DI.cartItemRepository.findAll({
-    populate: ["product"],
-  }); // how to load just one cart with user and !isDeleted ?
-  const validItems = cartsCollection.filter(
-    (cartItem) =>
-      cartItem.cart === wrappedCart && cartItem.product === wrappedProduct
+  const cartsCollection = await DI.cartItemRepository.find(
+    { cart: wrappedCart, product: wrappedProduct },
+    {
+      populate: ["product"],
+    }
   );
-  return validItems;
+
+  return cartsCollection;
 };
 
 const createCartItem = (cart: Cart, product: Product, count: number): void => {

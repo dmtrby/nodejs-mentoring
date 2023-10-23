@@ -46,10 +46,8 @@ const updateCart = async (
 const deleteCart = async (user: User): Promise<Boolean> => {
   const wrappedUser = wrap(user).toReference();
   const currentCart = await getCartByUserId(wrappedUser) as unknown as Cart;
-  console.log(currentCart);
   const wasDeleted = deleteCartByCart(currentCart);
-  // const newCartData = createCartForUserById(user);
-
+  
   return wasDeleted;
 };
 export { getCart, updateCart, deleteCart, getOrCreateCart };

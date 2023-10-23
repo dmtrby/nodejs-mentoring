@@ -5,14 +5,12 @@ import { wrap } from "@mikro-orm/core";
 
 const getCartByUserId = async (user: User): Promise<Cart | undefined> => {
   const wrappedUser = wrap(user).toReference();
-  const cartsCollection = await DI.cartRepository.findAll({
-    populate: ["user", "items"],
-  }); // how to load just one cart with user and !isDeleted ?
-  const userCart = cartsCollection.find(
-    (cart) => cart.user === wrappedUser && !cart.isDeleted
+  const userCart = await DI.cartRepository.find(
+    { user: wrappedUser, isDeleted: false },
+    { populate: ["user", "items"] }
   );
 
-  return userCart;
+  return userCart[0] as Cart;
 };
 
 const deleteCartByCart = (cart: Cart): Boolean => {
@@ -28,8 +26,4 @@ const createCartForUserById = (user: User): void => {
   DI.cartRepository.create(newCart);
 };
 
-export {
-  getCartByUserId,
-  createCartForUserById,
-  deleteCartByCart,
-};
+export { getCartByUserId, createCartForUserById, deleteCartByCart };
