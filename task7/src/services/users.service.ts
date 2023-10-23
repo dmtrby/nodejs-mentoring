@@ -1,4 +1,4 @@
-import { getUserById } from "../db/users.db";
+import { getUserById } from "../repository/users.repository";
 
 import { User } from "../entities/user.entity";
 

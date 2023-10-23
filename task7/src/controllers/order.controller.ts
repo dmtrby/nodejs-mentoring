@@ -48,7 +48,7 @@ const createNewOrder = async (req: Request, res: Response) => {
     .json(
       buildResponseData(
         {
-          ["order"]: {
+          order: {
             ...order,
             items: itemsWithProductsData,
             userId: orderUser.id,

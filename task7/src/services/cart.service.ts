@@ -3,12 +3,12 @@ import {
   createCartItem,
   getCartItems,
   updateCartItem,
-} from "../db/cartItems.db";
+} from "../repository/cartItems.repository";
 import {
   createCartForUserById,
   getCartByUserId,
   deleteCartByCart,
-} from "../db/carts.db";
+} from "../repository/carts.repository";
 import { Cart } from "../entities/cart.entity";
 import { Product } from "../entities/product.entity";
 import { User } from "../entities/user.entity";

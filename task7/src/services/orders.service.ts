@@ -1,4 +1,4 @@
-import { createOrder, createOrderItem } from "../db/orders.db";
+import { createOrder, createOrderItem } from "../repository/orders.repository";
 import { Cart } from "../entities/cart.entity";
 import { Delivery } from "../entities/delivery.entity";
 import { Order } from "../entities/order.entity";

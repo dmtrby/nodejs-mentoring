@@ -11,7 +11,7 @@ export const buildResponseData = (
 ): CartResponse | ProductResponse | ProductsResponse => {
   const errorData = message ? { message } : null;
   return {
-    ["data"]: data,
-    ["error"]: errorData,
+    data: data,
+    error: errorData,
   };
 };

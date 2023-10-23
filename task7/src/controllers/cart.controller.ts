@@ -26,8 +26,8 @@ const getUserCart = async (req: Request, res: Response) => {
   // @ts-ignore
   const total = calculateTotal(itemsWithProductsData);
   const result = {
-    ["cart"]: { id, items: itemsWithProductsData },
-    ["total"]: total,
+    cart: { id, items: itemsWithProductsData },
+    total: total,
   };
 
   res.status(STATUS_CODES.success).json(buildResponseData(result, null));
@@ -75,8 +75,8 @@ const updateUserCart = async (req: Request, res: Response) => {
 // @ts-ignore
   const total = calculateTotal(itemsWithProductsData);
   const result = {
-    ["cart"]: { id, items: itemsWithProductsData },
-    ["total"]: total,
+    cart: { id, items: itemsWithProductsData },
+    total: total,
   };
 
   res.status(STATUS_CODES.success).json(buildResponseData(result, null));
