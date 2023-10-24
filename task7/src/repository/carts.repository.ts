@@ -13,6 +13,18 @@ const getCartByUserId = async (user: User): Promise<Cart | undefined> => {
   return userCart[0] as Cart;
 };
 
+const getCartByUserIdWithProducts = async (
+  user: User
+): Promise<Cart | undefined> => {
+  const wrappedUser = wrap(user).toReference();
+  const userCart = await DI.cartRepository.find(
+    { user: wrappedUser, isDeleted: false },
+    { populate: ["user", "items", "items.product"] }
+  );
+
+  return userCart[0] as Cart;
+};
+
 const deleteCartByCart = (cart: Cart): Boolean => {
   wrap(cart).assign({
     isDeleted: true,
@@ -26,4 +38,9 @@ const createCartForUserById = (user: User): void => {
   DI.cartRepository.create(newCart);
 };
 
-export { getCartByUserId, createCartForUserById, deleteCartByCart };
+export {
+  getCartByUserId,
+  createCartForUserById,
+  deleteCartByCart,
+  getCartByUserIdWithProducts,
+};

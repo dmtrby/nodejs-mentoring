@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { AUTH_HEADER, ERROR_MESSAGES, STATUS_CODES } from "../constants";
-import populateProductsDataIntoCartItems from "../helpers/populateProductsDataIntoCartItems";
-import { getCart } from "../services/cart.service";
+import { getCartWithProducts } from "../services/cart.service";
 import { buildResponseData } from "../utils/buildResponseData";
 import { Cart } from "../entities/cart.entity";
 import { calculateTotal } from "../utils/calculateTotal";
@@ -21,18 +20,15 @@ const createNewOrder = async (req: Request, res: Response) => {
   const userId = req.headers[AUTH_HEADER] as string;
   const user = (await getUser(userId as string)) as User;
   const { payment, delivery, comments } = req.body as TBody;
-  const cart = (await getCart(user)) as Cart;
+  const cart = (await getCartWithProducts(user)) as Cart;
+
   if (cart?.items.length === 0) {
     res
       .status(STATUS_CODES.badRequest)
       .json(buildResponseData(null, ERROR_MESSAGES.EMPTY_CART));
   }
-  const itemsWithProductsData = await populateProductsDataIntoCartItems(
-    cart.items
-  );
 
-  // @ts-ignore
-  const total = calculateTotal(itemsWithProductsData);
+  const total = calculateTotal(cart.items);
 
   const createdOrder = await postNewOrder(
     cart,
@@ -50,7 +46,7 @@ const createNewOrder = async (req: Request, res: Response) => {
         {
           order: {
             ...order,
-            items: itemsWithProductsData,
+            items: cart.items,
             userId: orderUser.id,
             cartId: orderCart.id,
           },

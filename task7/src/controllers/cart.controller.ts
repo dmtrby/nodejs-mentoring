@@ -4,13 +4,13 @@ import { buildResponseData } from "../utils/buildResponseData";
 import {
   deleteCart,
   getCart,
+  getCartWithProducts,
   getOrCreateCart,
   updateCart,
 } from "../services/cart.service";
 import { getProduct } from "../services/products.service";
 import { Cart } from "../entities/cart.entity";
 import { calculateTotal } from "../utils/calculateTotal";
-import populateProductsDataIntoCartItems from "../helpers/populateProductsDataIntoCartItems";
 import { getUser } from "../services/users.service";
 import { User } from "../entities/user.entity";
 import { Product } from "../entities/product.entity";
@@ -22,11 +22,9 @@ const getUserCart = async (req: Request, res: Response) => {
 
   const { id, items } = cart;
 
-  const itemsWithProductsData = await populateProductsDataIntoCartItems(items);
-  // @ts-ignore
-  const total = calculateTotal(itemsWithProductsData);
+  const total = calculateTotal(items);
   const result = {
-    cart: { id, items: itemsWithProductsData },
+    cart: { id, items },
     total: total,
   };
 
@@ -68,14 +66,13 @@ const updateUserCart = async (req: Request, res: Response) => {
   }
 
   await updateCart(currentCart, productData, count);
-  const updatedCart = (await getCart(user)) as Cart;
+  const updatedCart = (await getCartWithProducts(user)) as Cart;
 
   const { id, items } = updatedCart;
-  const itemsWithProductsData = await populateProductsDataIntoCartItems(items);
-// @ts-ignore
-  const total = calculateTotal(itemsWithProductsData);
+
+  const total = calculateTotal(items);
   const result = {
-    cart: { id, items: itemsWithProductsData },
+    cart: { id, items },
     total: total,
   };
 

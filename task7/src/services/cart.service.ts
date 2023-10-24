@@ -8,6 +8,7 @@ import {
   createCartForUserById,
   getCartByUserId,
   deleteCartByCart,
+  getCartByUserIdWithProducts,
 } from "../repository/carts.repository";
 import { Cart } from "../entities/cart.entity";
 import { Product } from "../entities/product.entity";
@@ -18,12 +19,17 @@ const getCart = async (user: User): Promise<Cart | undefined> => {
   return cart;
 };
 
+const getCartWithProducts = async (user: User): Promise<Cart | undefined> => {
+  let cart = await getCartByUserIdWithProducts(user);
+  return cart;
+};
+
 const getOrCreateCart = async (user: User): Promise<Cart> => {
   let cart = await getCartByUserId(user);
   if (!cart) {
     createCartForUserById(user);
   }
-  cart = (await getCartByUserId(user)) as Cart;
+  cart = (await getCartByUserIdWithProducts(user)) as Cart;
 
   return cart;
 };
@@ -45,9 +51,15 @@ const updateCart = async (
 
 const deleteCart = async (user: User): Promise<Boolean> => {
   const wrappedUser = wrap(user).toReference();
-  const currentCart = await getCartByUserId(wrappedUser) as unknown as Cart;
+  const currentCart = (await getCartByUserId(wrappedUser)) as unknown as Cart;
   const wasDeleted = deleteCartByCart(currentCart);
-  
+
   return wasDeleted;
 };
-export { getCart, updateCart, deleteCart, getOrCreateCart };
+export {
+  getCart,
+  updateCart,
+  deleteCart,
+  getOrCreateCart,
+  getCartWithProducts,
+};

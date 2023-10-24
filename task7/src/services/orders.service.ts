@@ -5,7 +5,6 @@ import { Order } from "../entities/order.entity";
 import { Payment } from "../entities/payment.entity";
 import { Product } from "../entities/product.entity";
 import { User } from "../entities/user.entity";
-import { getProduct } from "./products.service";
 
 const postNewOrder = async (
   cart: Cart,
@@ -25,12 +24,11 @@ const postNewOrder = async (
   );
 
   for (const item of cart.items) {
-    const productData = (await getProduct(item.product.id)) as Product;
     createOrderItem(
       createdOrder,
-      productData,
+      item.product as unknown as Product,
       item.count,
-      productData.price
+      (item.product as unknown as Product).price
     );
   }
   return Promise.resolve(createdOrder);
